@@ -1,0 +1,28 @@
+# dependencies
+node_modules
+
+# next.js / build output
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# test artifacts
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
+
+# misc
+.DS_Store
+*.log
+*.local
+
+# Never commit real EDI / PHI files (spec §1.4). The ONLY EDI files allowed in
+# the repo are the synthetic ones under /fixtures and /public/samples.
+*.edi
+*.x12
+*.834
+*.837
+!fixtures/**
+!public/samples/**

@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Swiss palette: stark paper-white + near-black ink + electric cobalt.
+   One variable swap themes the whole app (see darkMode: 'class'). */
+:root {
+  --canvas: 255 255 255; /* stark white page */
+  --surface: 255 255 255; /* panels — flat, separated by hairlines */
+  --ink: 14 14 16; /* near-black text */
+  --muted: 110 110 119; /* secondary text (zinc-500-ish) */
+  --line: 224 224 228; /* 1px hairlines (zinc-200-ish) */
+  --fill: 244 244 246; /* faint block fill (zinc-100-ish) */
+  --accent: 31 58 255; /* electric cobalt #1F3AFF */
+  --accent-fg: 255 255 255; /* text on accent */
+  --accent-soft: 235 238 255; /* pale cobalt wash */
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: 9 9 11; /* near-black */
+  --surface: 18 18 21; /* raised panel */
+  --ink: 248 248 250; /* near-white */
+  --muted: 150 150 160; /* secondary */
+  --line: 38 38 43; /* hairline */
+  --fill: 26 26 30; /* faint fill */
+  --accent: 99 122 255; /* brighter cobalt for dark contrast */
+  --accent-fg: 9 9 11;
+  --accent-soft: 24 28 56;
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-accent text-accent-fg;
+  }
+  /* Cobalt focus ring, square — the Swiss affordance. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-0;
+  }
+}
+
+@layer utilities {
+  /* Flat panel: hairline border, sharp corner, no shadow. */
+  .surface {
+    @apply border border-line bg-surface;
+  }
+  /* Uppercase tracked label — the Swiss workhorse for metadata. */
+  .label {
+    @apply text-[11px] font-medium uppercase tracking-[0.14em] text-muted;
+  }
+  /* Tight display type for headlines. */
+  .display {
+    @apply font-bold tracking-[-0.03em];
+    font-feature-settings: "ss01";
+  }
+  .scroll-slim::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    @apply bg-line;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted/40;
+  }
+}
