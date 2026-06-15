@@ -1,0 +1,5 @@
+# Cloudflare Pages config. The site is a Next.js static export (output: 'export'
+# → ./out), so Pages just serves static assets — no server runtime, no Functions.
+name = "edianalyst"
+compatibility_date = "2025-06-01"
+pages_build_output_dir = "out"

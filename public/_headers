@@ -1,0 +1,14 @@
+# Cloudflare Pages headers. The CSP enforces the product's core promise at the
+# browser level: connect-src 'self' means the page literally cannot send your
+# file anywhere — no fetch/XHR/WebSocket to any other origin. (When the Pro
+# license check lands, add its host to connect-src.)
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), usb=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+
+# Hashed build assets are immutable — cache them hard.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

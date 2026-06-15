@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "deploy": "next build && wrangler pages deploy",
     "gen:834": "tsx tools/gen-834.ts"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "tailwindcss": "^3.4.15",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "wrangler": "^4.100.0"
   }
 }

@@ -58,6 +58,27 @@ npm run gen:834      # regenerate the synthetic fixture set
 npm run gen:834 -- --members 100 --corrupt   # one-off file to stdout
 ```
 
+## Deploy (Cloudflare Pages)
+
+The app is a static export (`output: 'export'` → `out/`), so Pages just serves
+static files — no server runtime. [public/_headers](public/_headers) ships a
+strict CSP whose `connect-src 'self'` enforces the privacy promise at the browser
+level: the page literally cannot send a file anywhere.
+
+**Option A — Git integration (recommended, auto-deploys on push):** in the
+Cloudflare dashboard, create a Pages project from the `lactustech/edianalyst`
+repo with build command `npx next build` and output directory `out`.
+
+**Option B — CLI:**
+
+```bash
+npx wrangler login            # one-time browser auth
+npm run deploy                # next build && wrangler pages deploy (uses wrangler.toml)
+```
+
+**Option C — CI / token:** set `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`
+and run `npm run deploy` (no browser needed).
+
 ## Guardrails (spec §15)
 
 - No file bytes leave the browser — parsing is local, the worker has no `fetch`.
