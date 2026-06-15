@@ -58,26 +58,27 @@ npm run gen:834      # regenerate the synthetic fixture set
 npm run gen:834 -- --members 100 --corrupt   # one-off file to stdout
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers — Static Assets)
 
-The app is a static export (`output: 'export'` → `out/`), so Pages just serves
-static files — no server runtime. [public/_headers](public/_headers) ships a
-strict CSP whose `connect-src 'self'` enforces the privacy promise at the browser
-level: the page literally cannot send a file anywhere.
+The app is a static export (`output: 'export'` → `out/`) served by an assets-only
+Worker (no server code). [wrangler.toml](wrangler.toml) points `[assets]` at
+`./out`; [public/_headers](public/_headers) ships a strict CSP whose
+`connect-src 'self'` enforces the privacy promise at the browser level — the page
+literally cannot send a file anywhere.
 
-**Option A — Git integration (recommended, auto-deploys on push):** in the
-Cloudflare dashboard, create a Pages project from the `lactustech/edianalyst`
-repo with build command `npx next build` and output directory `out`.
+**Git integration (auto-deploys on push):** the connected Workers build runs
+`npm run build` then `npx wrangler deploy`. Node is pinned to 22 via `.nvmrc`
+(Wrangler 4 requires ≥ 22).
 
-**Option B — CLI:**
+**CLI:**
 
 ```bash
-npx wrangler login            # one-time browser auth
-npm run deploy                # next build && wrangler pages deploy (uses wrangler.toml)
+npx wrangler login    # one-time browser auth
+npm run deploy        # next build && wrangler deploy (reads wrangler.toml)
 ```
 
-**Option C — CI / token:** set `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`
-and run `npm run deploy` (no browser needed).
+**CI / token:** set `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`, then
+`npm run deploy` (no browser needed).
 
 ## Guardrails (spec §15)
 
