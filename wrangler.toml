@@ -1,5 +1,8 @@
-# Cloudflare Pages config. The site is a Next.js static export (output: 'export'
-# → ./out), so Pages just serves static assets — no server runtime, no Functions.
+# Cloudflare Workers (Static Assets). The site is a Next.js static export
+# (output: 'export' → ./out); an assets-only Worker (no `main`) just serves those
+# files. `npx wrangler deploy` uploads ./out and deploys.
 name = "edianalyst"
 compatibility_date = "2025-06-01"
-pages_build_output_dir = "out"
+
+[assets]
+directory = "./out"
