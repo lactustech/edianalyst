@@ -1,0 +1,36 @@
+/**
+ * Canonical site metadata, used by the layout, robots, and sitemap.
+ *
+ * SITE_URL drives Open Graph / canonical / sitemap URLs. Override it at build
+ * time with NEXT_PUBLIC_SITE_URL once a custom domain is attached (set it in the
+ * Cloudflare build environment).
+ */
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://edianalyst.lactustech.workers.dev"
+).replace(/\/$/, "");
+
+export const SITE_NAME = "EDIAnalyst";
+
+export const SITE_TAGLINE = "Healthcare EDI, made readable";
+
+export const SITE_DESCRIPTION =
+  "Drop in a healthcare X12 EDI file — 835, 837, 834, 270/271, 276/277, 999, 820 — " +
+  "and get a clean, sortable table in seconds, with denials and rejections decoded into " +
+  "plain English. Parsed entirely in your browser; no file ever leaves your device.";
+
+export const SITE_KEYWORDS = [
+  "EDI viewer",
+  "X12 EDI",
+  "healthcare EDI",
+  "835 remittance viewer",
+  "ERA viewer",
+  "837 claim viewer",
+  "834 enrollment",
+  "270 271 eligibility",
+  "276 277 claim status",
+  "999 acknowledgment",
+  "EDI to Excel",
+  "denial decoder",
+  "HIPAA EDI",
+  "CARC RARC",
+];
