@@ -61,16 +61,13 @@ export function DropZone({ onFile }: { onFile: (file: File) => void }) {
         </svg>
       </span>
 
-      <div className="min-w-0">
-        <p className="display text-lg text-ink">Drop any X12 file — we&apos;ll detect the type</p>
-        <p className="mt-0.5 text-sm text-muted">
+      <div className="min-w-0 flex-1">
+        <p className="display text-balance text-lg text-ink">Drop any X12 file — we&apos;ll detect the type</p>
+        <p className="mt-1 text-sm text-muted">
           Parsed entirely in your browser — nothing is uploaded.
         </p>
+        <p className="label mt-3">Any X12 file · .edi .x12 .txt .dat · or no extension</p>
       </div>
-
-      <span className="label ml-auto hidden shrink-0 md:block">
-        Any X12 file · .edi .x12 .txt .dat · or no extension
-      </span>
     </div>
   );
 }
