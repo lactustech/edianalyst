@@ -72,6 +72,17 @@ export function Viewer() {
     [analyzeFile],
   );
 
+  // Deep link from the reference pages: /?try=sample-835.edi auto-loads that
+  // sample. Only our own sample files are allowed.
+  useEffect(() => {
+    const file = new URLSearchParams(window.location.search).get("try");
+    if (file && /^sample-[a-z0-9-]+\.edi$/.test(file)) {
+      void loadSample(`/samples/${file}`, file, file.includes("835") ? "findings" : undefined);
+    }
+    // run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const jumpToSegment = useCallback((segmentIndex: number) => {
     setHighlightIndex(segmentIndex);
     setTab("developer");

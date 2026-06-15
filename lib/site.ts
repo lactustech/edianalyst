@@ -6,7 +6,7 @@
  * Cloudflare build environment).
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://edianalyst.lactustech.workers.dev"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://edianalyst.com"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "EDIAnalyst";

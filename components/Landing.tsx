@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { REFERENCE } from "../lib/reference";
 import { DropZone } from "./DropZone";
 
 const CAPABILITIES = [
@@ -108,6 +110,21 @@ export function Landing({
           </div>
         ))}
       </section>
+
+      {/* Transaction reference — indexable links to the per-transaction pages. */}
+      <footer className="mt-12 border-t border-ink py-8">
+        <span className="label">Transaction reference</span>
+        <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+          {REFERENCE.map((r) => (
+            <li key={r.slug}>
+              <Link href={`/edi/${r.slug}`} className="group inline-flex items-baseline gap-2 text-sm">
+                <span className="display font-bold text-accent">{r.code}</span>
+                <span className="text-muted group-hover:text-ink">{r.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </footer>
     </div>
   );
 }
