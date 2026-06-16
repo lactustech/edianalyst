@@ -47,7 +47,7 @@ export function Landing({
   return (
     <div className="animate-fade-in">
       <div className="border-b border-line py-3">
-        <span className="label">Never uploaded · Never stored · Nothing leaves your browser · Your PHI stays on your machine</span>
+        <span className="label">Never uploaded · Never stored · Your PHI stays on your machine</span>
       </div>
 
       <section className="grid gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:py-16">
