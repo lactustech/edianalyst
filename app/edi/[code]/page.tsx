@@ -161,12 +161,29 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
         )}
 
         {(r.code === "270" || r.code === "271") && (
-          <p className="mt-5 text-sm">
+          <p className="mt-5 space-y-1 text-sm">
             <Link
               href="/edi/270/service-type-codes"
-              className="font-medium text-accent underline-offset-2 hover:underline"
+              className="block font-medium text-accent underline-offset-2 hover:underline"
             >
               Browse the 270/271 service type codes, explained in plain English →
+            </Link>
+            <Link
+              href="/edi/271/eligibility-codes"
+              className="block font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse the 271 eligibility &amp; benefit codes (EB01, AAA) →
+            </Link>
+          </p>
+        )}
+
+        {r.code === "837" && (
+          <p className="mt-5 text-sm">
+            <Link
+              href="/edi/837/place-of-service-codes"
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse the place of service (POS) codes, explained in plain English →
             </Link>
           </p>
         )}

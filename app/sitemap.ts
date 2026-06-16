@@ -4,7 +4,9 @@ import { codeSlug, DENIAL_CODES } from "../lib/denial-codes";
 import { REFERENCE } from "../lib/reference";
 import { FOOTER_PAGES, SITE_URL } from "../lib/site";
 import { ACK_CODES, codeSlug as ackSlug } from "../lib/codes-999";
+import { codeSlug as eligSlug, ELIG_CODES } from "../lib/eligibility-codes";
 import { codeSlug as enrollSlug, ENROLL_CODES } from "../lib/enrollment-codes";
+import { codeSlug as posSlug, POS_CODES } from "../lib/place-of-service-codes";
 import { codeSlug as serviceSlug, SERVICE_TYPES } from "../lib/service-type-codes";
 import { codeSlug as statusSlug, STATUS_CODES } from "../lib/status-codes";
 
@@ -51,6 +53,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/edi/999/error-codes`, changeFrequency: "monthly" as const, priority: 0.7 },
     ...ACK_CODES.map((c) => ({
       url: `${SITE_URL}/edi/999/error-codes/${ackSlug(c)}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
+    { url: `${SITE_URL}/edi/271/eligibility-codes`, changeFrequency: "monthly" as const, priority: 0.7 },
+    ...ELIG_CODES.map((c) => ({
+      url: `${SITE_URL}/edi/271/eligibility-codes/${eligSlug(c)}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
+    { url: `${SITE_URL}/edi/837/place-of-service-codes`, changeFrequency: "monthly" as const, priority: 0.7 },
+    ...POS_CODES.map((c) => ({
+      url: `${SITE_URL}/edi/837/place-of-service-codes/${posSlug(c)}`,
       changeFrequency: "yearly" as const,
       priority: 0.5,
     })),

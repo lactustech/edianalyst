@@ -56,6 +56,20 @@ const CODE_REFERENCES = [
     blurb:
       "The 999 acknowledgment codes plus the IK304 segment and IK403 element syntax errors — what each accept/reject and syntax code means and how to fix it.",
   },
+  {
+    href: "/edi/271/eligibility-codes",
+    kicker: "270 / 271 · EB01 & AAA",
+    title: "271 eligibility & benefit codes",
+    blurb:
+      "The EB01 benefit codes on a 271 (active, inactive, copay, deductible, limitation) and the AAA reject reason codes for an unanswerable inquiry.",
+  },
+  {
+    href: "/edi/837/place-of-service-codes",
+    kicker: "837 · POS (CMS)",
+    title: "Place of service codes",
+    blurb:
+      "The place-of-service codes that say where a service was rendered — 11 office, 02/10 telehealth, 21 inpatient hospital, 23 emergency room and more.",
+  },
 ];
 
 export default function ReferenceIndex() {
