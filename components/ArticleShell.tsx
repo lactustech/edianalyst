@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import { articleLd, breadcrumbLd } from "../lib/seo";
+import { AUTHOR_NAME, AUTHOR_TITLE } from "../lib/site";
 import { JsonLd } from "./JsonLd";
 import { SiteFooter } from "./SiteFooter";
 import { ThemeToggle } from "./ThemeToggle";
@@ -89,7 +90,15 @@ export function ArticleShell({
           <span className="text-accent">.</span>
         </h1>
         {intro && <p className="mt-4 max-w-2xl text-lg text-muted">{intro}</p>}
-        {published && <p className="mt-3 label">Published · {published}</p>}
+        {published && (
+          <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
+            <span className="font-medium text-ink">{AUTHOR_NAME}</span>
+            <span className="text-line" aria-hidden>·</span>
+            <span>{AUTHOR_TITLE}</span>
+            <span className="text-line" aria-hidden>·</span>
+            <span>Published {published}</span>
+          </div>
+        )}
 
         <div className="mt-10">{children}</div>
       </article>

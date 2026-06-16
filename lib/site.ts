@@ -15,6 +15,10 @@ export const SITE_TAGLINE = "Healthcare EDI, made readable";
 
 export const SITE_COMPANY = "Lactus Tech";
 
+/** Blog author byline — shown on articles and used in BlogPosting structured data. */
+export const AUTHOR_NAME = "Ujwal Nambiar";
+export const AUTHOR_TITLE = "Founder, EDIAnalyst";
+
 export const CONTACT_EMAIL = "support@edianalyst.com";
 
 /** Year the project went live — used for the © range in the footer. */

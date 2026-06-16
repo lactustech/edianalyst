@@ -10,7 +10,7 @@
  *      `articleLd()` produce schema.org objects rendered via <JsonLd>.
  */
 import type { Metadata } from "next";
-import { SITE_COMPANY, SITE_NAME, SITE_URL } from "./site";
+import { AUTHOR_NAME, AUTHOR_TITLE, SITE_COMPANY, SITE_NAME, SITE_URL } from "./site";
 
 /** The site's default social card (app/opengraph-image.png). */
 const OG_IMAGE = "/opengraph-image.png";
@@ -65,7 +65,7 @@ export function articleLd(opts: { title: string; description: string; path: stri
     dateModified: opts.published,
     inLanguage: "en-US",
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}${opts.path}` },
-    author: { "@type": "Organization", name: SITE_COMPANY, url: SITE_URL },
+    author: { "@type": "Person", name: AUTHOR_NAME, jobTitle: AUTHOR_TITLE },
     publisher: { "@type": "Organization", name: SITE_COMPANY, url: SITE_URL },
   };
 }
