@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArticleShell, ArticleSection } from "../../../components/ArticleShell";
+import { JsonLd } from "../../../components/JsonLd";
 import { getPost } from "../../../lib/blog";
 import { og, twitter } from "../../../lib/seo";
 import { SITE_NAME } from "../../../lib/site";
@@ -19,7 +20,28 @@ function Seg({ children }: { children: React.ReactNode }) {
   return <span className="font-mono text-ink">{children}</span>;
 }
 
+const FAQ = [
+  {
+    q: "How do I key a member across two 834 files?",
+    a: "Use the subscriber ID plus member ID from the REF and NM1 segments (e.g. REF*0F subscriber ID, REF*1L group number). Don't match on name — it changes spelling — and don't rely on position in the file.",
+  },
+  {
+    q: "Where are a member's coverage dates?",
+    a: "In the DTP segments under each HD coverage block. DTP*348 is benefit begin, DTP*349 benefit end, and DTP*356/357 eligibility begin/end. A termination should have a matching end date there.",
+  },
+  {
+    q: "What's the most important field in an 834?",
+    a: "The maintenance type in INS03 — add (021), term (024), change (001), reinstate (025). It decides what happens to the member, so it's the first thing to read on each INS loop.",
+  },
+];
+
 export default function Article() {
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
+
   return (
     <ArticleShell
       crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Reading an 834" }]}
@@ -30,6 +52,7 @@ export default function Article() {
       published={post.published}
       description={post.metaDescription}
     >
+      <JsonLd data={faqLd} />
       <ArticleSection title="The shape of the file">
         <p>
           An 834 wraps each member in a loop that starts with an <Seg>INS</Seg> segment, followed by reference
@@ -99,6 +122,20 @@ export default function Article() {
         </p>
       </ArticleSection>
 
+      <ArticleSection title="Subscribers and dependents">
+        <p>
+          Members come in two kinds, and the <Seg>INS</Seg> segment tells you which. The <strong>subscriber</strong> —
+          the person who holds the policy — has <Seg>INS01</Seg> = <Seg>Y</Seg> and relationship <Seg>18</Seg> (self). A{" "}
+          <strong>dependent</strong> has <Seg>INS01</Seg> = <Seg>N</Seg> and a relationship like <Seg>01</Seg> (spouse)
+          or <Seg>19</Seg> (child). Dependents inherit the subscriber&apos;s policy, so when you build a roster you
+          carry the subscriber ID down onto each dependent row to keep the family together.
+        </p>
+        <p>
+          That structure is why you read an 834 one <Seg>INS</Seg> loop at a time but always in the context of its
+          subscriber — a dependent&apos;s coverage and dates only make sense relative to the policy they sit under.
+        </p>
+      </ArticleSection>
+
       <ArticleSection title="The envelope and the totals">
         <p>
           At the file level, <Seg>BGN</Seg> identifies the transaction (and whether it&apos;s an original or a
@@ -106,6 +143,35 @@ export default function Article() {
           <Seg>SE</Seg> trailer carries a segment count. If a member seems to be missing, a count mismatch is often the
           first clue that the file was truncated.
         </p>
+      </ArticleSection>
+
+      <ArticleSection title="A reading order that works">
+        <p>When you open an unfamiliar 834, a consistent order keeps you from getting lost:</p>
+        <ol className="ml-5 list-decimal space-y-1.5 text-sm">
+          <li>Read the <Seg>BGN</Seg> to confirm it&apos;s the file you expect (original vs replacement, and its date).</li>
+          <li>Check the sponsor and payer <Seg>N1</Seg> loops — who sent it and which plan it&apos;s for.</li>
+          <li>For each member, read <Seg>INS03</Seg> first (the action), then <Seg>NM1</Seg>/<Seg>REF</Seg> (who) and <Seg>DMG</Seg> (demographics).</li>
+          <li>Then the <Seg>HD</Seg> coverage blocks and their <Seg>DTP</Seg> dates (what coverage, and from when to when).</li>
+          <li>Finally, reconcile the <Seg>SE</Seg> count if anything looks short.</li>
+        </ol>
+        <p>
+          For the full list of values behind these fields — relationship, coverage level, insurance line — see the{" "}
+          <Link href="/edi/834/enrollment-codes" className="font-medium text-accent underline-offset-2 hover:underline">
+            834 enrollment codes
+          </Link>{" "}
+          reference.
+        </p>
+      </ArticleSection>
+
+      <ArticleSection title="Frequently asked questions">
+        <dl className="mt-4 space-y-5">
+          {FAQ.map((f) => (
+            <div key={f.q}>
+              <dt className="text-base font-semibold text-ink">{f.q}</dt>
+              <dd className="mt-1.5 text-sm leading-relaxed text-muted">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
       </ArticleSection>
 
       <ArticleSection title="Read it as a table instead">
@@ -118,6 +184,14 @@ export default function Article() {
         <p>
           <Link href="/" className="font-medium text-accent underline-offset-2 hover:underline">
             Open an 834 in EDIAnalyst →
+          </Link>{" "}
+          ·{" "}
+          <Link href="/blog/convert-834-to-member-roster-excel" className="font-medium text-accent underline-offset-2 hover:underline">
+            Export a member roster to Excel →
+          </Link>{" "}
+          ·{" "}
+          <Link href="/blog/diff-two-834-files" className="font-medium text-accent underline-offset-2 hover:underline">
+            Diff two 834s →
           </Link>
         </p>
       </ArticleSection>

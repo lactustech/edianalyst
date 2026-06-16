@@ -67,6 +67,61 @@ export const BLOG_POSTS: BlogPost[] = [
     kicker: "Guide · 834",
     published: "2026-06-16",
   },
+  {
+    slug: "convert-834-to-member-roster-excel",
+    title: "Convert an 834 to a Clean Member Roster in Excel",
+    metaTitle: "Convert an 834 to a Member Roster in Excel — Free",
+    metaDescription:
+      "Turn an 834 enrollment file into a clean Excel member roster — one row per member with ID, demographics, coverage, and dates. Parsed in your browser, no upload.",
+    blurb:
+      "Flatten an 834's INS loops into one row per member and export the roster to Excel — entirely in your browser.",
+    kicker: "Guide · 834",
+    published: "2026-06-16",
+  },
+  {
+    slug: "diff-two-834-files",
+    title: "How to Diff Two 834 Files and Catch Every Add, Term, and Change",
+    metaTitle: "Diff Two 834 Files — Catch Every Add, Term & Change",
+    metaDescription:
+      "Compare this week's 834 against last week's and see exactly who was added, terminated, or changed — with field-level before and after. No upload.",
+    blurb:
+      "Compare two enrollment files and see precisely who joined, left, or changed — field by field.",
+    kicker: "Guide · 834",
+    published: "2026-06-16",
+  },
+  {
+    slug: "read-a-999-why-837-rejected",
+    title: "How to Read a 999 and Decode Exactly Why Your 837 Rejected",
+    metaTitle: "Read a 999 — Decode Exactly Why Your 837 Rejected",
+    metaDescription:
+      "Walk a 999 acknowledgment from AK9 down to IK3 and IK4 — and decode the IK304/IK403 codes that pinpoint which segment and field made your 837 reject.",
+    blurb:
+      "Trace a 999 from the group result down to the exact segment and element that failed your 837.",
+    kicker: "Guide · 999",
+    published: "2026-06-16",
+  },
+  {
+    slug: "find-834-termination-dates-dtp357",
+    title: "Finding Termination Dates in an 834 (DTP*357) in Seconds",
+    metaTitle: "Find 834 Termination Dates (DTP*357) in Seconds",
+    metaDescription:
+      "Where coverage-end dates live in an 834: the DTP*357 eligibility-end and DTP*349 benefit-end segments — and how to find every termination in a file fast.",
+    blurb:
+      "Coverage-end dates hide in DTP*357 and DTP*349 — here's how to surface every termination at a glance.",
+    kicker: "Guide · 834",
+    published: "2026-06-16",
+  },
+  {
+    slug: "reading-837p-loops-and-segments",
+    title: "Reading an 837P: Which Loops and Segments Actually Matter",
+    metaTitle: "Reading an 837P — The Loops & Segments That Matter",
+    metaDescription:
+      "An 837P has dozens of segments, but only a handful decide whether a claim pays. A practical tour of the HL loops, CLM, HI, and SV1 segments that matter.",
+    blurb:
+      "Skip the envelope noise — the HL hierarchy, CLM, HI, and SV1 segments that actually decide a professional claim.",
+    kicker: "Guide · 837",
+    published: "2026-06-16",
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {

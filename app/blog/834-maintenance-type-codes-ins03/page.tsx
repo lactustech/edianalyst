@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArticleShell, ArticleSection } from "../../../components/ArticleShell";
+import { JsonLd } from "../../../components/JsonLd";
 import { getPost } from "../../../lib/blog";
 import { og, twitter } from "../../../lib/seo";
 import { SITE_NAME } from "../../../lib/site";
@@ -52,7 +53,28 @@ const CODES: { code: string; name: string; what: string }[] = [
   },
 ];
 
+const FAQ = [
+  {
+    q: "Which INS03 value is a termination?",
+    a: "024 (Termination / Cancellation). It ends a member's coverage and carries a termination date in the DTP segment. It's the value enrollment teams watch most closely, because a wrong 024 drops someone's coverage.",
+  },
+  {
+    q: "What's the difference between 021 and 025?",
+    a: "021 (Addition) enrolls a brand-new member or coverage. 025 (Reinstatement) restores coverage that was previously terminated. Use 025 to bring someone back after an 024 rather than re-adding them as a new 021, so history is preserved.",
+  },
+  {
+    q: "What's the difference between INS03 and INS04?",
+    a: "INS03 is the maintenance type — what's happening (add, term, change). INS04 is the maintenance reason — why it's happening (e.g. birth, retirement, termination of employment). Read them together when reconciling.",
+  },
+];
+
 export default function Article() {
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
+
   return (
     <ArticleShell
       crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "834 maintenance types" }]}
@@ -63,6 +85,7 @@ export default function Article() {
       published={post.published}
       description={post.metaDescription}
     >
+      <JsonLd data={faqLd} />
       <ArticleSection title="Where to find it">
         <p>
           An 834 carries member enrollment between a sponsor (an employer or government program) and a health plan.
@@ -100,6 +123,23 @@ export default function Article() {
         </p>
       </ArticleSection>
 
+      <ArticleSection title="Full-file vs change-file changes how you read 030">
+        <p>
+          Context matters for the maintenance type — especially <Seg>030</Seg> (audit/compare). On a{" "}
+          <strong>change file</strong>, every record is a real movement, so an <Seg>021</Seg> or <Seg>024</Seg> means
+          exactly what it says. On a <strong>full file</strong> (the entire census re-sent each cycle), senders often
+          stamp every member <Seg>030</Seg> — which tells you nothing about who actually moved.
+        </p>
+        <p>
+          That&apos;s the trap: on a full file you can&apos;t trust the maintenance type alone to find changes. You have
+          to compare the file against the prior one. See{" "}
+          <Link href="/blog/diff-two-834-files" className="font-medium text-accent underline-offset-2 hover:underline">
+            how to diff two 834 files
+          </Link>{" "}
+          for the reliable way to catch every add, term, and change regardless of what INS03 claims.
+        </p>
+      </ArticleSection>
+
       <ArticleSection title="Why it's worth getting right">
         <p>
           The maintenance type drives real outcomes: an 021 enrolls someone, an 024 ends their coverage, an 001 quietly
@@ -107,6 +147,27 @@ export default function Article() {
           coverage they shouldn&apos;t. When you open an enrollment file, the maintenance type on each member is the
           first thing to verify.
         </p>
+        <p>
+          A few habits keep INS03 from causing trouble. Always pair a <Seg>024</Seg> with a termination date in the{" "}
+          <Seg>DTP</Seg> (see{" "}
+          <Link href="/blog/find-834-termination-dates-dtp357" className="font-medium text-accent underline-offset-2 hover:underline">
+            finding termination dates
+          </Link>
+          ); treat a <Seg>024</Seg> with no end date, or an end date with no <Seg>024</Seg>, as something to verify
+          before acting; and confirm a <Seg>021</Seg> is genuinely new rather than a change that should have been an{" "}
+          <Seg>001</Seg>. Small discrepancies here become coverage gaps and premium errors downstream.
+        </p>
+      </ArticleSection>
+
+      <ArticleSection title="Frequently asked questions">
+        <dl className="mt-4 space-y-5">
+          {FAQ.map((f) => (
+            <div key={f.q}>
+              <dt className="text-base font-semibold text-ink">{f.q}</dt>
+              <dd className="mt-1.5 text-sm leading-relaxed text-muted">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
       </ArticleSection>
 
       <ArticleSection title="See the maintenance type on every member">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArticleShell, ArticleSection } from "../../../components/ArticleShell";
+import { JsonLd } from "../../../components/JsonLd";
 import { getPost } from "../../../lib/blog";
 import { og, twitter } from "../../../lib/seo";
 import { SITE_NAME } from "../../../lib/site";
@@ -19,7 +20,32 @@ function Seg({ children }: { children: React.ReactNode }) {
   return <span className="font-mono text-ink">{children}</span>;
 }
 
+const FAQ = [
+  {
+    q: "Is an 835 the same as an ERA?",
+    a: "Yes. 835 is the X12 transaction number and ERA (Electronic Remittance Advice) is the business name. It's the electronic version of the paper EOB a payer sends a provider, and it travels with the payment.",
+  },
+  {
+    q: "What's the difference between a CARC and a RARC?",
+    a: "A CARC (Claim Adjustment Reason Code) explains why an amount wasn't paid and rides in the CAS segment with a group code (CO/PR/OA/PI). A RARC (Remittance Advice Remark Code) adds extra detail and rides in the LQ segment. You often need to read both.",
+  },
+  {
+    q: "How do I tell a denial from a write-off?",
+    a: "Check the CLP status (4 = denied) and whether the paid amount is zero against a non-zero charge. A CO contractual write-off isn't a denial — the claim still paid its allowed amount; the CO line is just the part you can't bill the patient.",
+  },
+  {
+    q: "Is my 835 uploaded anywhere?",
+    a: "No. The file is parsed entirely in your browser, so no file or PHI is ever sent to a server. You can confirm it in your browser's Network tab.",
+  },
+];
+
 export default function Article() {
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
+
   return (
     <ArticleShell
       crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Reading an 835" }]}
@@ -30,6 +56,7 @@ export default function Article() {
       published={post.published}
       description={post.metaDescription}
     >
+      <JsonLd data={faqLd} />
       <ArticleSection title="What an 835 is">
         <p>
           An 835 — the Electronic Remittance Advice, or ERA — is the electronic version of the paper EOB a payer
@@ -109,6 +136,22 @@ export default function Article() {
         </p>
       </ArticleSection>
 
+      <ArticleSection title="Claim-level vs service-line adjustments">
+        <p>
+          Adjustments show up at two levels, and mixing them up is a common mistake. A <Seg>CAS</Seg> directly under the{" "}
+          <Seg>CLP</Seg> is a <strong>claim-level</strong> adjustment — it applies to the claim as a whole. A{" "}
+          <Seg>CAS</Seg> under an <Seg>SVC</Seg> is a <strong>service-line</strong> adjustment that applies only to that
+          procedure. A single claim can have both: a line-level <Seg>CO-45</Seg> write-off on one procedure and a
+          claim-level <Seg>PR-1</Seg> deductible, for instance.
+        </p>
+        <p>
+          When you reconcile, total the adjustments at the level they appear. A claim balances when its charge equals
+          the paid amount plus the claim-level adjustments plus the sum of every line&apos;s charge-minus-paid. Reading
+          the <Seg>SVC</Seg> lines is also how you answer &ldquo;which procedure got denied?&rdquo; when only part of a
+          claim was paid.
+        </p>
+      </ArticleSection>
+
       <ArticleSection title="Does the claim balance?">
         <p>
           A correct 835 always balances at the claim level: the <strong>total charge</strong> equals the{" "}
@@ -116,6 +159,33 @@ export default function Article() {
           a segment was misread or the remittance has a real problem worth questioning. Checking this by hand across a
           large file is tedious and error-prone — it&apos;s the first thing to automate.
         </p>
+      </ArticleSection>
+
+      <ArticleSection title="Reassociating the payment to your deposit">
+        <p>
+          The 835 explains the money, but you still have to match it to the actual deposit that hit the bank. That&apos;s
+          what the <Seg>BPR</Seg> and <Seg>TRN</Seg> are for. The <Seg>BPR</Seg> carries the total payment amount and
+          the method — <Seg>ACH</Seg> for an EFT, <Seg>CHK</Seg> for a check, or a non-payment indicator for a
+          zero-dollar remit. The <Seg>TRN</Seg> carries the reassociation trace number, which is the EFT or check number
+          your bank shows on the deposit.
+        </p>
+        <p>
+          Matching the <Seg>TRN</Seg> trace number to the deposit is called <em>reassociation</em>, and it&apos;s how
+          posting teams confirm an ERA belongs to a specific payment before they post it. One 835 can cover many claims
+          in a single payment, so the <Seg>BPR</Seg> total should equal the sum of what was paid across every{" "}
+          <Seg>CLP</Seg> in the file — another balance worth checking.
+        </p>
+      </ArticleSection>
+
+      <ArticleSection title="Frequently asked questions">
+        <dl className="mt-4 space-y-5">
+          {FAQ.map((f) => (
+            <div key={f.q}>
+              <dt className="text-base font-semibold text-ink">{f.q}</dt>
+              <dd className="mt-1.5 text-sm leading-relaxed text-muted">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
       </ArticleSection>
 
       <ArticleSection title="Read it without the manual decoding">
@@ -129,6 +199,10 @@ export default function Article() {
         <p>
           <Link href="/" className="font-medium text-accent underline-offset-2 hover:underline">
             Open an 835 in EDIAnalyst →
+          </Link>{" "}
+          ·{" "}
+          <Link href="/edi/835/denial-codes" className="font-medium text-accent underline-offset-2 hover:underline">
+            Browse all 835 denial codes →
           </Link>
         </p>
       </ArticleSection>
