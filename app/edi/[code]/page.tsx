@@ -5,6 +5,7 @@ import { getRef, REFERENCE, type RefPage } from "../../../lib/reference";
 import { SITE_NAME, SITE_URL } from "../../../lib/site";
 import { Viewer } from "../../../components/Viewer";
 import { SiteFooter } from "../../../components/SiteFooter";
+import { ThemeToggle } from "../../../components/ThemeToggle";
 
 export const dynamicParams = false;
 
@@ -77,7 +78,10 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           <Mark />
           <span className="display text-[15px] uppercase tracking-[-0.01em] text-ink">EDIAnalyst</span>
         </Link>
-        <span className="label">X12 · 5010</span>
+        <div className="flex items-center gap-4">
+          <span className="label hidden sm:inline">X12 · 5010</span>
+          <ThemeToggle />
+        </div>
       </header>
 
       {/* breadcrumb */}

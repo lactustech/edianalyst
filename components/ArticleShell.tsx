@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { articleLd, breadcrumbLd } from "../lib/seo";
 import { JsonLd } from "./JsonLd";
 import { SiteFooter } from "./SiteFooter";
+import { ThemeToggle } from "./ThemeToggle";
 
 function Mark() {
   return (
@@ -60,7 +61,10 @@ export function ArticleShell({
           <Mark />
           <span className="display text-[15px] uppercase tracking-[-0.01em] text-ink">EDIAnalyst</span>
         </Link>
-        <span className="label">X12 · 5010</span>
+        <div className="flex items-center gap-4">
+          <span className="label hidden sm:inline">X12 · 5010</span>
+          <ThemeToggle />
+        </div>
       </header>
 
       <nav className="pt-4 text-sm text-muted" aria-label="Breadcrumb">
