@@ -138,6 +138,17 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           ))}
         </dl>
 
+        {r.code === "835" && (
+          <p className="mt-5 text-sm">
+            <Link
+              href="/edi/835/denial-codes"
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse every CARC &amp; RARC denial code, explained in plain English →
+            </Link>
+          </p>
+        )}
+
         <H2>Frequently asked questions</H2>
         <dl className="mt-5 space-y-5">
           {r.faq.map((f) => (

@@ -21,10 +21,14 @@ export const CONTACT_EMAIL = "support@edianalyst.com";
 export const SITE_LAUNCH_YEAR = 2026;
 
 /**
- * Informational / legal pages linked from the site footer. Order is the order
- * they render. Each has a static route under app/<slug>/page.tsx.
+ * Pages linked from the site footer. Order is the order they render. Most slugs
+ * map to a static route under app/<slug>/page.tsx; a slug may also be a deeper
+ * path (e.g. the denial-code reference), which the footer links to directly and
+ * the sitemap skips (it's already listed under its own section).
  */
 export const FOOTER_PAGES: { slug: string; label: string }[] = [
+  { slug: "blog", label: "Blog" },
+  { slug: "edi/835/denial-codes", label: "Reference" },
   { slug: "about", label: "About Us" },
   { slug: "contact", label: "Contact Us" },
   { slug: "privacy", label: "Privacy" },
