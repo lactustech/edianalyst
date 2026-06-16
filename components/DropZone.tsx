@@ -142,10 +142,10 @@ export function DropZone({
         )}
 
         {state === "idle" && (
-          <div className="flex flex-col items-center gap-1.5">
-            <p className="label">We&apos;ll auto-detect the type — 834, 835, 837, 999 and more</p>
-            <p className="label">Parsed in your browser · Never uploaded</p>
-            <p className="label">Any X12 file · Any extension, or none</p>
+          <div className="flex flex-col items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted">
+            <p>We&apos;ll auto-detect the type — 834, 835, 837, 999 and more</p>
+            <p>Parsed in your browser · Never uploaded</p>
+            <p>Any X12 file · Any extension, or none</p>
           </div>
         )}
       </div>
