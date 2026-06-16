@@ -46,9 +46,8 @@ export function Landing({
 }) {
   return (
     <div className="animate-fade-in">
-      <div className="flex items-center justify-between border-b border-line py-3">
-        <span className="label">01 — Drop a file</span>
-        <span className="label hidden sm:block">No upload · No server · No PHI leaves the device</span>
+      <div className="border-b border-line py-3">
+        <span className="label">No upload · No server · No PHI leaves the device</span>
       </div>
 
       <section className="grid gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:py-16">
