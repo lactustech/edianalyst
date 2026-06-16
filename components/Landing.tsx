@@ -73,7 +73,10 @@ export function Landing({
         </div>
 
         <div className="flex flex-col justify-center">
-          <DropZone onFile={onFile} />
+          <DropZone
+            onFile={onFile}
+            onTrySample={() => onSample("/samples/sample-835.edi", "sample-835.edi", "findings")}
+          />
         </div>
       </section>
 
