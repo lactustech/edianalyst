@@ -74,13 +74,14 @@ export function Landing({
 
         <div className="flex flex-col justify-center">
           <DropZone onFile={onFile} />
-          <p className="mt-2 label">Every sample is synthetic — generated, never real data</p>
         </div>
       </section>
 
       {/* Sample library — one chip per transaction type */}
       <section className="border-t border-ink pt-6">
-        <span className="label">Or try a synthetic sample</span>
+        <span className="label">
+          Or try a synthetic sample · every sample is synthetic — generated, never real data
+        </span>
         <div className="mt-4 grid grid-cols-2 gap-px bg-line sm:grid-cols-3 lg:grid-cols-4">
           {SAMPLES.map((s) => (
             <button
