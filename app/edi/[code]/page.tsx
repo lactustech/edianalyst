@@ -149,6 +149,17 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           </p>
         )}
 
+        {r.code === "277" && (
+          <p className="mt-5 text-sm">
+            <Link
+              href="/edi/277/status-codes"
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse the 277 claim status codes, explained in plain English →
+            </Link>
+          </p>
+        )}
+
         <H2>Frequently asked questions</H2>
         <dl className="mt-5 space-y-5">
           {r.faq.map((f) => (
