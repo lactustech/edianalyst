@@ -41,7 +41,8 @@ interface GenOptions {
   interchangeControl: string;
   groupControl: string;
   stControl: string;
-  purpose: string; // BGN08
+  purpose: string; // BGN01 transaction set purpose
+  action: string; // BGN08 action code (2 = change file, 4 = full file)
 }
 
 interface CoverageModel {
@@ -231,7 +232,7 @@ export function serialize(members: MemberModel[], opts: GenOptions): string {
 
   // Header / control.
   body.push(seg("ST", "834", opts.stControl));
-  body.push(seg("BGN", "00", "REF" + opts.stControl, "20210901", "1200", "", "", "", opts.purpose));
+  body.push(seg("BGN", opts.purpose, "REF" + opts.stControl, "20210901", "1200", "", "", "", opts.action));
   body.push(seg("REF", "38", "MASTER" + opts.groupControl));
   body.push(seg("DTP", "007", "D8", "20210901"));
   // QTY control total. Corrupt files deliberately miscount.
@@ -297,6 +298,7 @@ function baseOptions(over: Partial<GenOptions> = {}): GenOptions {
     groupControl: "1001",
     stControl: "0001",
     purpose: "00",
+    action: "4",
     ...over,
   };
 }

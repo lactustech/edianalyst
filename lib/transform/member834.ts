@@ -1,4 +1,4 @@
-import { benefitStatus, gender as genderCodes, maintenanceReason as maintenanceReasonCodes, transactionPurpose } from "../codelists/misc";
+import { benefitStatus, fileAction, gender as genderCodes, maintenanceReason as maintenanceReasonCodes, transactionPurpose } from "../codelists/misc";
 import { COVERAGE_DATE_QUALIFIERS, MEMBER_DATE_QUALIFIERS } from "../codelists/dtpQualifiers";
 import { insuranceLine } from "../codelists/insuranceLine";
 import { maintenanceTone, maintenanceType, type BadgeTone } from "../codelists/maintenanceType";
@@ -43,8 +43,10 @@ export interface MemberRow {
 
 /** A whole 834 reduced to what an analyst needs at a glance. */
 export interface Document834 {
-  purposeCode: string; // BGN08
+  purposeCode: string; // BGN01 transaction set purpose
   purpose: string; // decoded
+  actionCode: string; // BGN08 action code (full vs change file)
+  action: string; // decoded
   fileEffectiveDate?: string; // header DTP*007 ISO
   declaredMemberCount?: number; // QTY*DT
   sponsorName?: string; // 1000A N1*P5
@@ -82,6 +84,8 @@ export function transform834(txn: TransactionSet): Document834 {
   const doc: Document834 = {
     purposeCode: "",
     purpose: "",
+    actionCode: "",
+    action: "",
     members: [],
     counts: { additions: 0, terminations: 0, changes: 0, other: 0 },
   };
@@ -98,8 +102,11 @@ export function transform834(txn: TransactionSet): Document834 {
     if (!current) {
       switch (seg.tag) {
         case "BGN":
-          doc.purposeCode = el(seg, 8);
-          doc.purpose = decode(transactionPurpose, el(seg, 8));
+          // BGN01 = transaction set purpose; BGN08 = action code (full/change).
+          doc.purposeCode = el(seg, 1);
+          doc.purpose = decode(transactionPurpose, el(seg, 1));
+          doc.actionCode = el(seg, 8);
+          doc.action = el(seg, 8) ? decode(fileAction, el(seg, 8)) : "";
           break;
         case "DTP":
           if (el(seg, 1) === "007") doc.fileEffectiveDate = displayDate(el(seg, 3));

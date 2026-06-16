@@ -5,7 +5,7 @@ import { isa } from "./helpers";
 function file(...memberSegs: string[]): string {
   const txn = [
     "ST*834*0001",
-    "BGN*00*REF*20210901*1200****22",
+    "BGN*22*REF*20210901*1200****2",
     "DTP*007*D8*20210901",
     "QTY*DT*2",
     "N1*P5*ACME EMPLOYER*FI*99",
@@ -48,10 +48,12 @@ const DEPENDENT = [
 ];
 
 describe("transform834", () => {
-  it("reads the file purpose from BGN08", () => {
+  it("reads the purpose from BGN01 and the action code from BGN08", () => {
     const { enrollment } = analyze(file(...SUBSCRIBER));
     expect(enrollment?.purposeCode).toBe("22");
     expect(enrollment?.purpose).toBe("Information copy");
+    expect(enrollment?.actionCode).toBe("2");
+    expect(enrollment?.action).toBe("Change file — updates only");
   });
 
   it("produces one row per member with decoded fields", () => {

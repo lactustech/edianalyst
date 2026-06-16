@@ -26,11 +26,16 @@ export function SummaryBar({
   return (
     <div className="animate-slide-up border border-ink">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-2.5">
-        <div className="flex items-center gap-3 text-sm">
+        <div className="flex flex-wrap items-center gap-2 text-sm">
           <span className="font-semibold text-ink">{fileName ?? "834 file"}</span>
           <span className="border border-accent px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-accent">
             {doc.purpose || "Purpose not stated"}
           </span>
+          {doc.action && (
+            <span className="border border-line px-1.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted">
+              {doc.action}
+            </span>
+          )}
         </div>
         {doc.fileEffectiveDate && <span className="label">Effective {doc.fileEffectiveDate}</span>}
       </div>

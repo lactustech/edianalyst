@@ -1,14 +1,23 @@
 import type { CodeList } from "./types";
 
 /**
- * BGN08 — the purpose of the whole file. Surfaced prominently in the summary
- * bar so the analyst knows what they're holding. Wording is our own.
+ * BGN01 — the transaction set purpose: what this file represents. Wording is ours.
  */
 export const transactionPurpose: CodeList = {
   "00": "Original file",
   "15": "Re-submission",
   "22": "Information copy",
   RX: "Reversal of a prior file",
+};
+
+/**
+ * BGN08 — the 834 action code: whether the file is a full snapshot or only the
+ * changes since the last one. (Distinct from BGN01's purpose.) Wording is ours.
+ */
+export const fileAction: CodeList = {
+  "2": "Change file — updates only",
+  "4": "Full file — verification",
+  RX: "Replacement file",
 };
 
 /**
