@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getRef, REFERENCE, type RefPage } from "../../../lib/reference";
 import { SITE_NAME, SITE_URL } from "../../../lib/site";
+import { Viewer } from "../../../components/Viewer";
 
 export const dynamicParams = false;
 
@@ -99,15 +100,19 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           ))}
         </div>
 
-        <div className="mt-10">
-          <Link
-            href={`/?try=${r.sample}`}
-            className="inline-block bg-accent px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-accent-fg transition-colors hover:bg-ink"
-          >
-            Open a sample {r.code} in the viewer →
-          </Link>
-          <p className="mt-2 label">Runs in your browser · the sample is synthetic, never real data</p>
-        </div>
+        {/* The tool, embedded: drop a real file or open a sample, results inline. */}
+        <section className="mt-10 border-t border-ink pt-8">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-ink">
+            Try it — open a {r.code} file
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted">
+            Drop your own {r.code} below (or open a synthetic sample). It&apos;s parsed entirely in
+            your browser — nothing is uploaded.
+          </p>
+          <div className="mt-5">
+            <Viewer embedded sampleFile={r.sample} sampleCode={r.code} />
+          </div>
+        </section>
 
         <H2>How EDIAnalyst reads a {r.code}</H2>
         <p className="mt-5 text-base leading-relaxed text-muted">{r.reads}</p>

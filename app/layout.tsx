@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TAGLINE, SITE_URL } from "../lib/site";
 import "./globals.css";
+
+const GA_ID = "G-Q3ZHHJ8QSL";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,6 +94,13 @@ export default function RootLayout({
         />
       </head>
       <body>{children}</body>
+
+      {/* Google Analytics 4 — page events only. File parsing happens in a Web
+          Worker with no network access, so PHI never reaches analytics. */}
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+      <Script id="ga4" strategy="afterInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+      </Script>
     </html>
   );
 }

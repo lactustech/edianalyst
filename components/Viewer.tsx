@@ -31,6 +31,7 @@ import { ClaimsTable } from "./ClaimsTable";
 import { DeveloperView } from "./DeveloperView";
 import { DiffPanel } from "./DiffPanel";
 import { FindingsList } from "./FindingsList";
+import { DropZone } from "./DropZone";
 import { Landing } from "./Landing";
 import { MemberDrawer } from "./MemberDrawer";
 import { MemberTable } from "./MemberTable";
@@ -41,7 +42,20 @@ import { useAnalyzer } from "./useAnalyzer";
 
 type Tab = "data" | "findings" | "developer" | "compare";
 
-export function Viewer() {
+/**
+ * The viewer. In `embedded` mode (used on the /edi/<code> reference pages) it
+ * drops the app header and the marketing landing, showing a compact drop zone
+ * that expands into the full results inline — same tables, drawers, and findings.
+ */
+export function Viewer({
+  embedded = false,
+  sampleFile,
+  sampleCode,
+}: {
+  embedded?: boolean;
+  sampleFile?: string;
+  sampleCode?: string;
+} = {}) {
   const { state, analyzeFile, reset } = useAnalyzer();
   const [tab, setTab] = useState<Tab>("data");
   const [member, setMember] = useState<MemberRow | null>(null);
@@ -119,14 +133,33 @@ export function Viewer() {
               : "Claims";
 
   return (
-    <div className="min-h-screen">
-      <AppHeader onReset={reset} showReset={state.status === "done"} />
+    <div className={embedded ? "" : "min-h-screen"}>
+      {!embedded && <AppHeader onReset={reset} showReset={state.status === "done"} />}
 
-      <main className="mx-auto max-w-6xl px-6 pb-24">
-        {state.status === "idle" && <Landing onFile={analyzeFile} onSample={loadSample} />}
+      <main className={embedded ? "" : "mx-auto max-w-6xl px-6 pb-24"}>
+        {state.status === "idle" &&
+          (embedded ? (
+            <div className="space-y-3">
+              <DropZone onFile={analyzeFile} />
+              {sampleFile && (
+                <p className="text-sm text-muted">
+                  Or{" "}
+                  <button
+                    onClick={() => loadSample(`/samples/${sampleFile}`, sampleFile)}
+                    className="font-medium text-accent underline-offset-2 hover:underline"
+                  >
+                    open a sample {sampleCode}
+                  </button>
+                  . Every sample is synthetic — generated, never real data.
+                </p>
+              )}
+            </div>
+          ) : (
+            <Landing onFile={analyzeFile} onSample={loadSample} />
+          ))}
 
         {busy && (
-          <section className="mt-20 max-w-xl animate-fade-in">
+          <section className={`${embedded ? "mt-6" : "mt-20"} max-w-xl animate-fade-in`}>
             <div className="label">{state.phase}</div>
             <p className="mt-2 text-sm text-muted">
               Reading <span className="font-medium text-ink">{state.fileName}</span> — entirely on your device.
@@ -139,7 +172,7 @@ export function Viewer() {
         )}
 
         {state.status === "error" && (
-          <section className="mt-20 max-w-xl animate-slide-up border-l-2 border-rose-500 bg-fill p-6">
+          <section className={`${embedded ? "mt-6" : "mt-20"} max-w-xl animate-slide-up border-l-2 border-rose-500 bg-fill p-6`}>
             <div className="label text-rose-600">Could not read file</div>
             <p className="mt-2 text-sm text-ink">{state.error}</p>
             <button
@@ -152,7 +185,18 @@ export function Viewer() {
         )}
 
         {state.status === "done" && result && (
-          <section className="mt-8 space-y-6">
+          <section className={`${embedded ? "mt-6" : "mt-8"} space-y-6`}>
+            {embedded && (
+              <div className="flex items-center justify-between">
+                <PrivacyBadge />
+                <button
+                  onClick={reset}
+                  className="border border-line px-3 py-1 text-[13px] font-medium uppercase tracking-wide text-muted transition-colors hover:bg-fill hover:text-ink"
+                >
+                  Open another file
+                </button>
+              </div>
+            )}
             {result.kind === "834" && result.enrollment ? (
               <SummaryBar doc={result.enrollment} report={result.report} fileName={state.fileName} />
             ) : result.kind === "835" && result.remittance ? (

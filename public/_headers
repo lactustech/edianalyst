@@ -1,13 +1,13 @@
-# Cloudflare Pages headers. The CSP enforces the product's core promise at the
-# browser level: connect-src 'self' means the page literally cannot send your
-# file anywhere — no fetch/XHR/WebSocket to any other origin. (When the Pro
-# license check lands, add its host to connect-src.)
+# Cloudflare headers. The CSP keeps file data on-device: the only off-origin
+# hosts allowed are Google Analytics, which receives page events only — file
+# parsing runs in a Web Worker with no network, so PHI never reaches them.
+# (When the Pro license check lands, add its host to connect-src.)
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: geolocation=(), camera=(), microphone=(), usb=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
 
 # Hashed build assets are immutable — cache them hard.
 /_next/static/*
