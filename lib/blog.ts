@@ -122,6 +122,116 @@ export const BLOG_POSTS: BlogPost[] = [
     kicker: "Guide · 837",
     published: "2026-06-16",
   },
+  {
+    slug: "837p-vs-837i",
+    title: "837P vs 837I: Professional vs Institutional Claims, Explained",
+    metaTitle: "837P vs 837I — Professional vs Institutional Claims",
+    metaDescription:
+      "837P vs 837I: how the professional (CMS-1500) and institutional (UB-04) claims differ — loops, segments, revenue codes — and how to tell which you're holding.",
+    blurb:
+      "Professional (CMS-1500) vs institutional (UB-04) claims — the loop, segment, and coding differences, side by side.",
+    kicker: "Compare · 837",
+    published: "2026-06-16",
+  },
+  {
+    slug: "834-vs-820",
+    title: "834 vs 820: Enrollment vs Premium Payment",
+    metaTitle: "834 vs 820 — Enrollment vs Premium Payment",
+    metaDescription:
+      "834 vs 820: the enrollment file says who's covered, the premium payment says who paid. How they pair, how to reconcile them, and how the two differ.",
+    blurb:
+      "One file says who's enrolled, the other says who paid — how the 834 and 820 pair and reconcile.",
+    kicker: "Compare · 834 / 820",
+    published: "2026-06-16",
+  },
+  {
+    slug: "835-vs-837",
+    title: "835 vs 837: How the Claim and the Payment Connect",
+    metaTitle: "835 vs 837 — How the Claim and Payment Connect",
+    metaDescription:
+      "835 vs 837: the 837 is the claim going out, the 835 is the payment coming back. The claim lifecycle, how to match an 835 to its 837, and how the two differ.",
+    blurb:
+      "The 837 is the claim out; the 835 is the payment back. How to match one to the other, and how they differ.",
+    kicker: "Compare · 835 / 837",
+    published: "2026-06-16",
+  },
+  {
+    slug: "999-vs-997-vs-ta1",
+    title: "999 vs 997 vs TA1: Which Acknowledgment Is Which",
+    metaTitle: "999 vs 997 vs TA1 — EDI Acknowledgments Explained",
+    metaDescription:
+      "999 vs 997 vs TA1: the TA1 acks the envelope; the 997 and 999 ack the functional group. What each accepts or rejects, and why 5010 mandates the 999.",
+    blurb:
+      "TA1, 997, 999 — which acknowledgment checks what, and why 5010 moved to the 999.",
+    kicker: "Compare · Acks",
+    published: "2026-06-16",
+  },
+  {
+    slug: "270-271-vs-276-277",
+    title: "270/271 vs 276/277: Eligibility vs Claim Status",
+    metaTitle: "270/271 vs 276/277 — Eligibility vs Claim Status",
+    metaDescription:
+      "270/271 vs 276/277: eligibility inquiry/response vs claim status inquiry/response. How the two request/response pairs work, and when each fires in the workflow.",
+    blurb:
+      "Eligibility (270/271) vs claim status (276/277) — the two request/response pairs, and when each fires.",
+    kicker: "Compare · 270 / 276",
+    published: "2026-06-16",
+  },
+  {
+    slug: "anatomy-of-an-x12-file",
+    title: "Anatomy of an X12 File: The ISA/GS/ST Envelope Explained",
+    metaTitle: "Anatomy of an X12 File — the ISA/GS/ST Envelope",
+    metaDescription:
+      "How an X12 EDI file is built: the ISA/IEA, GS/GE, and ST/SE envelope, delimiters, control numbers, and a fully labeled example you can read top to bottom.",
+    blurb:
+      "The ISA/GS/ST envelope, delimiters, and control numbers — how an X12 file is built, with a labeled example.",
+    kicker: "Guide · X12",
+    published: "2026-06-16",
+  },
+  {
+    slug: "x12-vs-5010-vs-7030",
+    title: "X12 vs 5010 vs 7030: EDI Standard Versions, Demystified",
+    metaTitle: "X12 vs 5010 vs 7030 — EDI Versions Demystified",
+    metaDescription:
+      "X12 is the standard; 5010 and 7030 are versions. The 4010-to-5010 HIPAA mandate, what 5010 changed, where 7030 stands, and where the version lives in a file.",
+    blurb:
+      "X12 is the standard; 5010 and 7030 are editions. The HIPAA mandate, what changed, and what you'll see in production.",
+    kicker: "Guide · X12",
+    published: "2026-06-16",
+  },
+  {
+    slug: "what-is-an-837-claim-file",
+    title: "What Is an 837 Claim File? A Healthcare Analyst's Primer",
+    metaTitle: "What Is an 837 Claim File? An Analyst's Primer",
+    metaDescription:
+      "What an 837 healthcare claim file is and why it exists: the claim lifecycle, the P/I/D variants, the key loops and segments, and how an 837 becomes an 835.",
+    blurb:
+      "What the 837 is, why it exists, its P/I/D variants, the key loops, and how it becomes an 835 — a primer.",
+    kicker: "Primer · 837",
+    published: "2026-06-16",
+  },
+  {
+    slug: "x12-segments-cheat-sheet",
+    title: "Common X12 Segments Cheat Sheet: INS, NM1, CLM, DTP, REF, HD",
+    metaTitle: "X12 Segments Cheat Sheet — INS, NM1, CLM, DTP, REF, HD",
+    metaDescription:
+      "A scannable cheat sheet of the most-used X12 EDI segments across 834, 835, and 837 — plain-English meaning, common qualifiers, and a one-line example for each.",
+    blurb:
+      "A scannable reference to the segments you hit most across 834/835/837 — meaning, qualifiers, and examples.",
+    kicker: "Cheat sheet · X12",
+    published: "2026-06-16",
+  },
+  {
+    slug: "edi-notepad-alternative",
+    title: "The Best EDI Notepad Alternative for Analysts",
+    metaTitle: "The Best EDI Notepad Alternative for Analysts",
+    metaDescription:
+      "Looking for an EDI Notepad alternative? A browser-based X12 viewer for analysts: no install, no PHI upload, auto-detection, and plain-English validation.",
+    blurb:
+      "Looking to replace EDI Notepad? A browser-based X12 viewer — no install, no upload, plain-English validation.",
+    kicker: "Guide · Tools",
+    published: "2026-06-16",
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
