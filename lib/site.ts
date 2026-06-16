@@ -13,6 +13,25 @@ export const SITE_NAME = "EDIAnalyst";
 
 export const SITE_TAGLINE = "Healthcare EDI, made readable";
 
+export const SITE_COMPANY = "Lactus Tech";
+
+export const CONTACT_EMAIL = "support@edianalyst.com";
+
+/** Year the project went live — used for the © range in the footer. */
+export const SITE_LAUNCH_YEAR = 2026;
+
+/**
+ * Informational / legal pages linked from the site footer. Order is the order
+ * they render. Each has a static route under app/<slug>/page.tsx.
+ */
+export const FOOTER_PAGES: { slug: string; label: string }[] = [
+  { slug: "about", label: "About Us" },
+  { slug: "contact", label: "Contact Us" },
+  { slug: "privacy", label: "Privacy" },
+  { slug: "terms", label: "Terms of Use" },
+  { slug: "disclaimer", label: "Disclaimer" },
+];
+
 export const SITE_DESCRIPTION =
   "Free in-browser viewer for healthcare X12 EDI — 835, 837, 834, 270/271, 276/277, 999, 820. " +
   "Denials decoded into plain English. No file ever leaves your device.";

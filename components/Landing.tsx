@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { REFERENCE } from "../lib/reference";
 import { DropZone } from "./DropZone";
+import { SiteFooter } from "./SiteFooter";
 
 const CAPABILITIES = [
   {
@@ -150,6 +151,8 @@ export function Landing({
           ))}
         </ul>
       </footer>
+
+      <SiteFooter />
     </div>
   );
 }

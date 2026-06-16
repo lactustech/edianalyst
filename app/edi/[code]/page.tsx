@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getRef, REFERENCE, type RefPage } from "../../../lib/reference";
 import { SITE_NAME, SITE_URL } from "../../../lib/site";
 import { Viewer } from "../../../components/Viewer";
+import { SiteFooter } from "../../../components/SiteFooter";
 
 export const dynamicParams = false;
 
@@ -167,6 +168,8 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
         </Link>
         <p className="mt-3 label">Processed entirely in your browser — no PHI leaves the device</p>
       </footer>
+
+      <SiteFooter />
     </main>
   );
 }
