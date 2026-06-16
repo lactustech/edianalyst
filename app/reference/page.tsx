@@ -35,6 +35,27 @@ const CODE_REFERENCES = [
     blurb:
       "Every claim status category and status code on a 277 or 277CA, decoded into a plain-English outcome — A3, 21, F2, 109 and more.",
   },
+  {
+    href: "/edi/270/service-type-codes",
+    kicker: "270 / 271 · EQ & EB",
+    title: "270/271 service type codes",
+    blurb:
+      "The EQ01/EB03 benefit codes an eligibility inquiry asks about — 30 (plan coverage), 98 (office visit), 88 (pharmacy), AL (vision) and more.",
+  },
+  {
+    href: "/edi/834/enrollment-codes",
+    kicker: "834 · INS & HD",
+    title: "834 enrollment codes",
+    blurb:
+      "The codes that describe each member — maintenance type (INS03), relationship (INS02), coverage level (HD05), and insurance line (HD03).",
+  },
+  {
+    href: "/edi/999/error-codes",
+    kicker: "999 · IK3 / IK4 / AK9",
+    title: "999 error codes",
+    blurb:
+      "The 999 acknowledgment codes plus the IK304 segment and IK403 element syntax errors — what each accept/reject and syntax code means and how to fix it.",
+  },
 ];
 
 export default function ReferenceIndex() {

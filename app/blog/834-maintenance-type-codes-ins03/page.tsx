@@ -123,6 +123,10 @@ export default function Article() {
           ·{" "}
           <Link href="/blog/how-to-read-an-834-enrollment-file" className="font-medium text-accent underline-offset-2 hover:underline">
             Read an 834 field by field →
+          </Link>{" "}
+          ·{" "}
+          <Link href="/edi/834/enrollment-codes" className="font-medium text-accent underline-offset-2 hover:underline">
+            All 834 enrollment codes →
           </Link>
         </p>
       </ArticleSection>

@@ -160,6 +160,39 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           </p>
         )}
 
+        {(r.code === "270" || r.code === "271") && (
+          <p className="mt-5 text-sm">
+            <Link
+              href="/edi/270/service-type-codes"
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse the 270/271 service type codes, explained in plain English →
+            </Link>
+          </p>
+        )}
+
+        {r.code === "834" && (
+          <p className="mt-5 text-sm">
+            <Link
+              href="/edi/834/enrollment-codes"
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse the 834 enrollment codes, explained in plain English →
+            </Link>
+          </p>
+        )}
+
+        {r.code === "999" && (
+          <p className="mt-5 text-sm">
+            <Link
+              href="/edi/999/error-codes"
+              className="font-medium text-accent underline-offset-2 hover:underline"
+            >
+              Browse the 999 error codes, explained in plain English →
+            </Link>
+          </p>
+        )}
+
         <H2>Frequently asked questions</H2>
         <dl className="mt-5 space-y-5">
           {r.faq.map((f) => (
