@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getRef, REFERENCE } from "../../../lib/reference";
-import { SITE_NAME } from "../../../lib/site";
+import { getRef, REFERENCE, type RefPage } from "../../../lib/reference";
+import { SITE_NAME, SITE_URL } from "../../../lib/site";
 
 export const dynamicParams = false;
 
@@ -13,13 +13,16 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { code: string } }): Metadata {
   const r = getRef(params.code);
   if (!r) return {};
-  const title = `${r.code} — ${r.name}: free in-browser viewer`;
-  const description = r.summary[0];
   return {
-    title,
-    description,
+    title: r.metaTitle,
+    description: r.metaDescription,
     alternates: { canonical: `/edi/${r.slug}` },
-    openGraph: { title: `${title} · ${SITE_NAME}`, description, url: `/edi/${r.slug}`, type: "article" },
+    openGraph: {
+      title: `${r.metaTitle} · ${SITE_NAME}`,
+      description: r.metaDescription,
+      url: `/edi/${r.slug}`,
+      type: "article",
+    },
   };
 }
 
@@ -34,12 +37,39 @@ function Mark() {
   );
 }
 
+function structuredData(r: RefPage) {
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: r.faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "EDIAnalyst", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: `${r.code} reference`, item: `${SITE_URL}/edi/${r.slug}` },
+    ],
+  };
+  return JSON.stringify([faqPage, breadcrumb]);
+}
+
+function H2({ children }: { children: React.ReactNode }) {
+  return <h2 className="mt-14 border-t border-ink pt-6 text-sm font-semibold uppercase tracking-wide text-ink">{children}</h2>;
+}
+
 export default function ReferencePage({ params }: { params: { code: string } }) {
   const r = getRef(params.code);
   if (!r) notFound();
 
   return (
     <main className="mx-auto max-w-3xl px-6 pb-24">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData(r) }} />
+
       <header className="flex items-center justify-between border-b border-ink py-3">
         <Link href="/" className="flex items-center gap-3">
           <Mark />
@@ -48,8 +78,15 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
         <span className="label">X12 · 5010</span>
       </header>
 
-      <article className="py-12 sm:py-16">
-        <div className="label">Transaction reference</div>
+      {/* breadcrumb */}
+      <nav className="pt-4 text-sm text-muted" aria-label="Breadcrumb">
+        <Link href="/" className="hover:text-accent">Home</Link>
+        <span className="px-1.5 text-line">/</span>
+        <span className="text-ink">{r.code} reference</span>
+      </nav>
+
+      <article className="pb-12">
+        <div className="mt-8 label">Transaction reference</div>
         <h1 className="display mt-3 text-5xl leading-[0.95] text-ink sm:text-6xl">
           {r.code}
           <span className="text-accent">.</span>
@@ -72,9 +109,10 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           <p className="mt-2 label">Runs in your browser · the sample is synthetic, never real data</p>
         </div>
 
-        <h2 className="mt-14 border-t border-ink pt-6 text-sm font-semibold uppercase tracking-wide text-ink">
-          What&apos;s inside a {r.code}
-        </h2>
+        <H2>How EDIAnalyst reads a {r.code}</H2>
+        <p className="mt-5 text-base leading-relaxed text-muted">{r.reads}</p>
+
+        <H2>What&apos;s inside a {r.code}</H2>
         <dl className="mt-5 grid gap-px bg-line sm:grid-cols-2">
           {r.points.map((pt) => (
             <div key={pt.h} className="bg-canvas p-5">
@@ -84,8 +122,28 @@ export default function ReferencePage({ params }: { params: { code: string } }) 
           ))}
         </dl>
 
-        <h2 className="mt-14 text-sm font-semibold uppercase tracking-wide text-ink">Related transactions</h2>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <H2>{r.extra.title}</H2>
+        <dl className="mt-5 divide-y divide-line border-y border-line">
+          {r.extra.items.map((it) => (
+            <div key={it.k} className="grid grid-cols-[7rem_1fr] gap-4 py-3">
+              <dt className="font-mono text-sm font-semibold text-ink">{it.k}</dt>
+              <dd className="text-sm text-muted">{it.v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <H2>Frequently asked questions</H2>
+        <dl className="mt-5 space-y-5">
+          {r.faq.map((f) => (
+            <div key={f.q}>
+              <dt className="text-base font-semibold text-ink">{f.q}</dt>
+              <dd className="mt-1.5 text-sm leading-relaxed text-muted">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <H2>Related transactions</H2>
+        <div className="mt-5 flex flex-wrap gap-2">
           {r.related.map((code) => (
             <Link
               key={code}

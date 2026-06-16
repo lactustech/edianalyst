@@ -111,6 +111,28 @@ export function Landing({
         ))}
       </section>
 
+      {/* Indexable copy — what the tool is, for search engines and first-time visitors. */}
+      <section className="mt-12 border-t border-ink pt-8">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink">What EDIAnalyst does</h2>
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
+          EDIAnalyst is a free, browser-based viewer for healthcare X12 EDI. Drop in a remittance
+          (835), a professional or institutional claim (837P / 837I), an enrollment file (834), an
+          eligibility inquiry or response (270 / 271), a claim-status request, response, or
+          acknowledgment (276 / 277 / 277CA), an implementation acknowledgment (999), or a premium
+          payment (820) — it detects the transaction type and turns it into a clean, sortable table.
+          There&apos;s nothing to install and nothing to configure.
+        </p>
+        <h2 className="mt-8 text-sm font-semibold uppercase tracking-wide text-ink">
+          Your data never leaves your browser
+        </h2>
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
+          Every file is parsed entirely on your device. No bytes are uploaded, so there&apos;s no
+          server to trust with PHI and no HIPAA hosting to worry about — you can confirm it in your
+          browser&apos;s Network tab. Denials, rejections, and validation problems are explained in
+          plain English, and any view exports to CSV or Excel.
+        </p>
+      </section>
+
       {/* Transaction reference — indexable links to the per-transaction pages. */}
       <footer className="mt-12 border-t border-ink py-8">
         <span className="label">Transaction reference</span>

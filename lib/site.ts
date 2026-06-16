@@ -14,9 +14,8 @@ export const SITE_NAME = "EDIAnalyst";
 export const SITE_TAGLINE = "Healthcare EDI, made readable";
 
 export const SITE_DESCRIPTION =
-  "Drop in a healthcare X12 EDI file — 835, 837, 834, 270/271, 276/277, 999, 820 — " +
-  "and get a clean, sortable table in seconds, with denials and rejections decoded into " +
-  "plain English. Parsed entirely in your browser; no file ever leaves your device.";
+  "Free in-browser viewer for healthcare X12 EDI — 835, 837, 834, 270/271, 276/277, 999, 820. " +
+  "Denials decoded into plain English. No file ever leaves your device.";
 
 export const SITE_KEYWORDS = [
   "EDI viewer",
