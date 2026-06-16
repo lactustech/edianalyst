@@ -26,3 +26,5 @@ next-env.d.ts
 *.837
 !fixtures/**
 !public/samples/**
+*.MD
+*.md
